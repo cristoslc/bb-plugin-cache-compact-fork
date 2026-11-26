@@ -1,6 +1,6 @@
 # Extension plan: OpenCode and Oh My Pi
 
-Status: implemented on branch `feat/opencode-omp-support`, and verified on a live bb 0.50.1 install. omp support is no longer unproven: see the resolved open question at the end.
+Status: implemented and verified on a live bb 0.50.1 install, then withdrawn from upstream review pending a week of real use. The assumed cache lifetimes are still assumptions, and the point of that week is to turn at least some of them into observations. omp compaction itself is no longer unproven: see the resolved open question at the end.
 
 ## What the evidence says
 
@@ -43,11 +43,11 @@ Five minutes for OpenCode is the Anthropic default cache lifetime and the shorte
 
 ## What shipped differently
 
-Two points diverge from the proposal and are recorded here rather than folded back into it:
+Three points diverge from the proposal and are recorded here rather than folded back into it:
 
-- The shipped TTL table has three entries, not the plan's two. `acp-opencode-nono` is the same OpenCode client under a sandbox wrapper, and 14 threads on the author's machine carry that id. Without an entry they would inherit the 60-minute global guess instead of the 5-minute OpenCode one.
+- The proposal named `acp-opencode-nono` as a third provider. The implementation shipped it, and it has since been removed from both the default provider list and the TTL table: `acp-opencode-nono` is a local experiment with a sandbox wrapper, not a runtime this plugin should claim to support upstream. Anyone running it can add the id to `providers` and `fallbackTtlMinutesByProvider` themselves.
 - The plan's single `fallback-ttl` source became two: `provider-fallback-ttl` for a documented per-provider assumption, and `fallback-ttl` for the global default. A documented assumption and a blanket default deserve different labels in the status output and Settings.
-- The plan had no guard against acting on a thread the plugin had only just met. Live verification showed why one is needed: widening the default provider list put four new provider ids on the path of the first scan, and that scan compacts a thread whose due time has already passed, because the target clamps to now. A thread must now be known for 60 seconds before its due time can fire. Explicit compaction from `bb cache-compact now` or the Settings button is exempt. This is scope the plan did not cover.
+- The plan had no guard against acting on a thread the plugin had only just met. Live verification showed why one is needed: widening the default provider list put the new provider ids on the path of the first scan, and that scan compacts a thread whose due time has already passed, because the target clamps to now. A thread must now be known for 60 seconds before its due time can fire. Explicit compaction from `bb cache-compact now` or the Settings button is exempt. This is scope the plan did not cover.
 
 ## Tests that would prove it
 

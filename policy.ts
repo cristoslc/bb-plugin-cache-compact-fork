@@ -159,7 +159,6 @@ const KNOWN_SLASH_ONLY_PROVIDERS: ReadonlySet<string> = new Set([
  */
 export const KNOWN_FALLBACK_TTL_PROVIDERS: ReadonlyMap<string, number> = new Map([
   ["acp-opencode", 5],
-  ["acp-opencode-nono", 5],
   ["acp-omp", 60],
 ]);
 

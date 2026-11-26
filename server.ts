@@ -131,7 +131,7 @@ const STATUS_DISPLAY_LIMIT = 50;
 
 /** Providers inspected for pre-expiry compaction on a fresh install. */
 export const DEFAULT_PROVIDERS =
-  "claude-code,pi,antigravity-cli,acp-opencode,acp-opencode-nono,acp-omp";
+  "claude-code,pi,antigravity-cli,acp-opencode,acp-omp";
 
 function extractPromptCacheTtlMs(row: ThreadEventRow): number | null {
   if (row.type !== "thread/tokenUsage/updated") return null;
@@ -266,7 +266,7 @@ export default async function plugin(bb: BbPluginApi) {
       type: "string",
       label: "Providers",
       description:
-        "Comma-separated provider IDs eligible for proactive pre-expiry compaction (for example: claude-code,pi,antigravity-cli,acp-opencode,acp-opencode-nono,acp-omp).",
+        "Comma-separated provider IDs eligible for proactive pre-expiry compaction (for example: claude-code,pi,antigravity-cli,acp-opencode,acp-omp).",
       experimental_schema: z
         .string()
         .max(512, "Provider list must be at most 512 characters."),

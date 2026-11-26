@@ -40,7 +40,7 @@ function makeConfig(overrides: Partial<CacheCompactConfig> = {}): CacheCompactCo
     minTokens: 100_000,
     leadMinutes: 3,
     providers: parseProviderList(
-      "claude-code,pi,antigravity-cli,acp-opencode,acp-opencode-nono,acp-omp",
+      "claude-code,pi,antigravity-cli,acp-opencode,acp-omp",
     ),
     fallbackTtlMinutes: 60,
     fallbackTtlMinutesByProvider: makeTtlSettings().fallbackTtlMinutesByProvider,
@@ -325,7 +325,7 @@ describe("policy", () => {
   });
 
   it("selects native compaction for OpenCode and Oh My Pi regardless of the /compact command", () => {
-    for (const providerId of ["acp-opencode", "acp-opencode-nono", "acp-omp"]) {
+    for (const providerId of ["acp-opencode", "acp-omp"]) {
       expect(
         resolveCompactionMethod({
           providerId,
@@ -351,7 +351,6 @@ describe("policy", () => {
       "pi",
       "antigravity-cli",
       "acp-opencode",
-      "acp-opencode-nono",
       "acp-omp",
     ]) {
       expect(providers.has(providerId)).toBe(true);
